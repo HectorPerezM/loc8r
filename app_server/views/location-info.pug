@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    .row.banner
+      .col-12
+        h1 Startcups
+    .row
+      .col-12.col-lg-9
+        .row
+          .col-12.col-md-6
+            p.rating
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+              i.fas.fa-star
+            p 125 High Street, Reading, RG6 1PS
+            .card.card-primary
+              .card-block
+                h2.card-title Opening hours
+                p.card-text Monday - Friday: 7:00am - 7:00pm
+                p.card-text Saturday: 8:00am - 5:00pm
+                p.card-text Sunday: closed
+            .card.card-primary
+              .card-block
+                h2.card-title Facilities
+                span.badge.badge-warning
+                  i.fa.fa-check &nbsp; Hot drinks
+                span.badge.badge-warning
+                  i.fa.fa-check &nbsp; Food
+                span.badge.badge-warning
+                  i.fa.fa-check &nbsp; Wifi
+          .col-12.col-md-6.location-map
+            .card.card-primary
+              .card-block
+                h2.card-title Location Map
+                img.img-fluid.rounded(src='https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=17&size=400x350&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyAOrUvzMrjU2PzXtpTe96dKhbz6xArKAFI')
+    .row  
+            
