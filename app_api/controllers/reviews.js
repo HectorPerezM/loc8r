@@ -143,7 +143,43 @@ const reviewsUpdateOne = (req, res) => {
         });
 };
 
-const reviewsDeleteOne = (req, res) => {};
+const reviewsDeleteOne = (req, res) => {
+    const {locationId, reviewId} = req.params;
+    if(!locationId || !reviewId) {
+        return res.status(404).json({"message": "Location Id or Review Id not found."});
+    }
+
+    Loc
+        .findById(locationId)
+        .select('reviews')
+        .exec((err, location) => {
+            if(!location) {
+                return res.status(404).json({"message": "Location not found."});
+            }
+
+            if(err) {
+                return res.status(400).json(err);
+            }
+
+            if(location.reviews && location.reviews.length > 0) {
+                if(!location.reviews.id(reviewId)) {
+                    return res.status(404).json({"message": "Review not found."});
+                } else {
+                    location.reviews.id(reviewId).remove();
+                    location.save(err => {
+                        if(err) {
+                            return res.status(404).json(err);
+                        } else {
+                            updateAverageRating(location._id);
+                            return res.status(204).json(null);
+                        }
+                    });
+                }
+            } else {
+                return res.status(404).json({"message": "No review to delete."});
+            }
+        });
+};
 
 module.exports = {
     reviewsCreate,
