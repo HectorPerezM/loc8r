@@ -104,7 +104,50 @@ const locationsReadOne = (req, res) => {
         });
 };
 
-const locationsUpdateOne = (req, res) => {};
+const locationsUpdateOne = (req, res) => {
+    if(!req.params.locationId) {
+        return res.status(404).json({"message": "Location Id required."});
+    }
+
+    Loc
+        .findById(req.params.locationId)
+        .select('-reviews -rating')
+        .exec((err, location) => {
+            if(!location) {
+                return res.status(404).json({"message": "Location not found."});
+            }
+
+            if(err) {
+                return res.status(400).json(err);
+            }
+
+            location.name = req.body.name;
+            location.address = req.body.address;
+            location.facilities = req.body.facilities.split(',');
+            location.coords = [
+                parseFloat(req.body.lng),
+                parseFloat(req.body.lat)
+            ];
+            location.openingTimes = [{
+                days: req.body.days1,
+                opening: req.body.opening1,
+                closing: req.body.closing1,
+                closed: req.body.closed1,
+              }, {
+                days: req.body.days2,
+                opening: req.body.opening2,
+                closing: req.body.closing2,
+                closed: req.body.closed2,
+              }];
+              location.save((err, loc) => {
+                  if(err) {
+                      return res.status(400).json(err);
+                  } else {
+                      return res.status(200).json(loc);
+                  }
+              });
+        });
+};
 
 const locationsDeleteOne = (req, res) => {};
 
