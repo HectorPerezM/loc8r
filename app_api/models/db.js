@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const dbURI = 'mongodb://localhost/Loc8r'
-
-mongoose.connect(dbURI, {useNewUrlParser: true});
+const mongoAtlasURI = process.env.MONGO_ATLAS_URI
+mongoose.connect(mongoAtlasURI, {useNewUrlParser: true});
 
 mongoose.connection.on('connected', () => {
-    console.log(`Mongoose connected to ${dbURI}`);
+    console.log(`Mongoose connected to MongoDB Atlas`);
 });
 
 mongoose.connection.on('error', err => {
