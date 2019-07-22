@@ -9,11 +9,12 @@ const locationsListByDistance = async (req, res) => {
     /* Creates the geoJSON */
     const near = {
         type: "Point",
-        coodinates: [lng, lat]
+        coordinates: [lng, lat]
     };
 
     const geoOptions = {
         distanceField: "distance.calculated",
+        key: 'coords',
         spherical: true,
         maxDistance: 20000,
         limit: 10
@@ -40,7 +41,7 @@ const locationsListByDistance = async (req, res) => {
                 address: result.address,
                 rating: result.rating,
                 facilities: result.facilities,
-                distance: `${result.distance.calculated.toFixed()}m`
+                distance: `${result.distance.calculated.toFixed()}`
             }
         });
 
