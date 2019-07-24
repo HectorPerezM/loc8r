@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dbURI = 'mongodb://localhost/Loc8r'
 const mongoAtlasURI = process.env.MONGO_ATLAS_URI
+
 mongoose.connect(mongoAtlasURI, {useNewUrlParser: true});
 
 mongoose.connection.on('connected', () => {
@@ -43,3 +44,4 @@ process.on('SIGTERM', () => {
 
 /* Adding models */
 require('./locations');
+require('./users');
