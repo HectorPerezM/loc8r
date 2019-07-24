@@ -1,5 +1,12 @@
 const express = require('express');
 const router  = express.Router();
+
+const jwt = require('express-jwt');
+const auth = jwt({
+    secret: process.env.JWT_SECRET,
+    userProperty: 'payload'
+})
+
 const ctrlLocations = require('../controllers/locations');
 const ctrlReviews   = require('../controllers/reviews');
 const ctrlAuth = require('../controllers/authentication');
@@ -18,13 +25,13 @@ router.
 //reviews
 router
     .route('/locations/:locationId/reviews')
-    .post(ctrlReviews.reviewsCreate);
+    .post(auth, ctrlReviews.reviewsCreate);
 
 router
     .route('/locations/:locationId/reviews/:reviewId')
     .get(ctrlReviews.reviewsReadOne)
-    .put(ctrlReviews.reviewsUpdateOne)
-    .delete(ctrlReviews.reviewsDeleteOne);
+    .put(auth, ctrlReviews.reviewsUpdateOne)
+    .delete(auth, ctrlReviews.reviewsDeleteOne);
 
 //Auth
 router.post('/register' ,ctrlAuth.register);
